@@ -40,6 +40,7 @@ Route::get('admin/product/edit/{id}', [AdminController::class, 'editProduct'])->
 Route::get('admin/product/delete/{id}', [AdminController::class, 'deleteProduct'])->name('admin-product-delete');
 Route::get('admin/product/createFrom', [AdminController::class, 'prodCreateForm'])->name('admin-product-create-form');
 Route::post('admin/product/createProduct', [AdminController::class, 'createProduct'])->name('admin-create-product');
+Route::post('admin/product/updateProduct/{id}', [AdminController::class, 'updateProduct'])->name('admin-update-product');
 
 
 Route::get('/loginpage',[MyAuthController::class, "loginPage"])->name('login-page');

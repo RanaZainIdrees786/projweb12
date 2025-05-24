@@ -34,7 +34,7 @@
                                             <td><img style='width: 70px;' src="{{asset('products/'.$product->image)}}" alt=""></td>
                                             <td class="text-center fw-medium">{{ $product->price }}</td>
                                             <td class="text-center fw-medium">
-                                                <a href="" class='btn btn-success'>Edit</a>
+                                                <a href="{{route('admin-product-edit', $product->id)}}" class='btn btn-success'>Edit</a>
                                                 <a href="{{ route('admin-product-delete', $product->id) }}"
                                                     class='btn btn-danger'>Delete</a>
                                             </td>

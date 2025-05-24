@@ -33,7 +33,34 @@ class AdminController extends Controller
     }
 
     public function editProduct($id){
-        
+        $product = Product::findOrFail($id);
+        return view('admin.producteditform')->with('product', $product);
+
+    }
+
+
+    public function updateProduct($id, Request $request){
+        $product = Product::findOrFail($id);
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->description = $request->description;
+        $product->save();
+
+        if ($request->image != "") {
+            // delete old image
+            File::delete(public_path('products/' . $product->image));
+            
+            // Create new image file name
+            $image = $request->image;
+            $ext = $image->getClientOriginalExtension();
+            $imageName = time() . '.' . $ext; // unique Image Name
+
+            //save image to the public directory
+            $image->move(public_path('products/'), $imageName);
+            $product->image = $imageName;
+            $product->save();
+        }
+        return redirect()->route('admin-index');
     }
 
     public function prodCreateForm()
