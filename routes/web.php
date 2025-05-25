@@ -27,11 +27,14 @@ Route::post('/user/update/{id}', [WebsiteController::class, 'updateUser'])->name
 Route::get('/fruitable/master', [FruitableController::class, 'masterPage'])->name('fruitable-master');
 Route::get('/fruitable/index', [FruitableController::class, 'indexPage'])->name('fruitable-index');
 Route::get('/fruitable/shop', [FruitableController::class, 'shopPage'])->name('fruitable-shop');
+Route::get("/fruitale/shopdetail/{id}",[AdminController::class, 'shopDetailPage'])->name('fruitable-shop-detail');
+
 Route::get('/fruitable/singleProduct', [FruitableController::class, 'singleProduct'])->name(name: 'fruitable-single-product');
 Route::get('/fruitable/cart', [FruitableController::class, 'cartPage'])->name('fruitable-cart');
 Route::get('/fruitable/checkout', [FruitableController::class, 'checkoutPage'])->name('fruitable-checkout');
 Route::get('/fruitable/contact', [FruitableController::class, 'contactPage'])->name('fruitable-contact');
-
+Route::get('fruitable/addtocart/{id}',[FruitableController::class, 'addtoCart'])->name('fruitable-addtocart');
+Route::get('fruitable/showcart',[FruitableController::class, 'showCart'])->name('fruitable-showcart');
 
 // Admin Panel Routes
 Route::get('/admin/index', [AdminController::class, 'indexPage'])->name('admin-index');

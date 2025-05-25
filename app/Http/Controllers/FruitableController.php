@@ -41,4 +41,37 @@ class FruitableController extends Controller
         return view('web.contact');
     }
 
+
+    public function addtoCart($id){
+        $product = Product::findOrFail($id);
+
+        // $cart = [
+        //     '9' => ['name'=> 'strawberries', 'image'=>'893399.jpg','description'=>'some dummy description','price'=>8393 ,'quantity' => 3,'subtotal' => 8393 * 3],
+        //     '11' => ['name'=> 'Bananas', 'image'=>'893399.jpg','description'=>'some dummy description', 'price'=>100, 'qunantity' => 24],
+        // ]
+
+        $cart = session()->get('cart');
+
+        if(isset($cart[$id])){
+            $cart[$id]['quantity']++;
+        }else{
+            $cart[$id] = [
+                "name" => $product->name,
+                "price" => $product->price,
+                "description" => $product->description,
+                "image" => $product->image,
+                "quantity" => 1
+            ];
+        }
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
+
+    }
+
+    public function showCart(){
+        $cart = session()->get('cart');
+        dd($cart);
+
+    }
+
 }

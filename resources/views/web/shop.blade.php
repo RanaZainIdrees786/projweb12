@@ -13,6 +13,12 @@
 
 
     <!-- Fruits Shop Start-->
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="container-fluid fruite py-5">
         <div class="container py-5">
             <h1 class="mb-4">Fresh fruits shop</h1>
@@ -202,37 +208,27 @@
                                     <div class="col-md-6 col-lg-6 col-xl-4">
                                         <div class="rounded position-relative fruite-item">
                                             <div class="fruite-img">
-                                                <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
+                                                <img src="{{ asset('products/' . $product->image) }}"
+                                                    class="img-fluid w-100 rounded-top" alt="">
                                             </div>
                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                                 style="top: 10px; left: 10px;">Fruits</div>
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>{{$product->name}}</h4>
-                                                <p>{{$product->description}}</p>
+                                                <h4>{{ $product->name }}</h4>
+                                                <p>{{ $product->description }}</p>
+                                                <p class="text-dark fs-5 fw-bold mb-1">{{ $product->price }} / kg</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-1">{{$product->price}} / kg</p>
-                                                    <a href="#"
-                                                        class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                            class="fa fa-shopping-bag me-2 text-primary"></i> Add to
+                                                    <a href="{{route('fruitable-addtocart',$product->id)}}"
+                                                        class="btn btn-sm border border-secondary rounded-pill text-primary"><i
+                                                            class="fa fa-shopping-bag me-1 text-primary"></i> Add to
                                                         cart</a>
+                                                    <a class="btn btn-sm border border-secondary rounded-pill px-3 text-primary"
+                                                        href="{{ route('fruitable-shop-detail', $product->id) }}">Details</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
-                                {{-- <div class="col-12">
-                                        <div class="pagination d-flex justify-content-center mt-5">
-                                            <a href="#" class="rounded">&laquo;</a>
-                                            <a href="#" class="active rounded">1</a>
-                                            <a href="#" class="rounded">2</a>
-                                            <a href="#" class="rounded">3</a>
-                                            <a href="#" class="rounded">4</a>
-                                            <a href="#" class="rounded">5</a>
-                                            <a href="#" class="rounded">6</a>
-                                            <a href="#" class="rounded">&raquo;</a>
-                                        </div>
-                                    </div> --}}
                             </div>
                         </div>
                     </div>

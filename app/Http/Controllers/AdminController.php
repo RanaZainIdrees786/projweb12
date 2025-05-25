@@ -39,6 +39,12 @@ class AdminController extends Controller
     }
 
 
+    public function shopDetailPage($id){
+        $product = Product::findOrFail($id);
+        return view('web.shopdetail')->with(['product' => $product]);
+
+    }
+
     public function updateProduct($id, Request $request){
         $product = Product::findOrFail($id);
         $product->name = $request->name;
@@ -49,7 +55,7 @@ class AdminController extends Controller
         if ($request->image != "") {
             // delete old image
             File::delete(public_path('products/' . $product->image));
-            
+
             // Create new image file name
             $image = $request->image;
             $ext = $image->getClientOriginalExtension();
@@ -82,7 +88,7 @@ class AdminController extends Controller
             $image = $request->image;
             $ext = $image->getClientOriginalExtension(); // jpg
             $imageName = time() . "." . $ext; // Unique image name; 839337.jpg
-            
+
             // save image to products directory
             $image->move(public_path() . "/products/", $imageName);
 
