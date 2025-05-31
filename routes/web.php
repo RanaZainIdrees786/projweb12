@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Middleware\LogRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\WebsiteController;
@@ -25,7 +26,10 @@ Route::post('/user/update/{id}', [WebsiteController::class, 'updateUser'])->name
 
 // Fruitables Routes
 Route::get('/fruitable/master', [FruitableController::class, 'masterPage'])->name('fruitable-master');
-Route::get('/fruitable/index', [FruitableController::class, 'indexPage'])->name('fruitable-index');
+Route::get('/fruitable/index', [FruitableController::class, 'indexPage'])
+    ->name('fruitable-index')
+    // ->middleware(LogRequest::class);
+;
 Route::get('/fruitable/shop', [FruitableController::class, 'shopPage'])->name('fruitable-shop');
 Route::get("/fruitale/shopdetail/{id}",[AdminController::class, 'shopDetailPage'])->name('fruitable-shop-detail');
 
@@ -37,6 +41,17 @@ Route::get('fruitable/addtocart/{id}',[FruitableController::class, 'addtoCart'])
 Route::get('fruitable/showcart',[FruitableController::class, 'showCart'])->name('fruitable-showcart');
 
 // Admin Panel Routes
+
+
+Route::get('/loginuser',[MyAuthController::class, "loginPage"])->name('login-page');
+Route::post('/loginuser',[MyAuthController::class, "login"])->name('login');
+Route::get('/registerpage',[MyAuthController::class, "registerPage"])->name('register-page');
+Route::post('/register',[MyAuthController::class, "register"])->name('register');
+Route::get('/logout',[MyAuthController::class, "logout"])->name('logout');
+
+
+
+Route::middleware('auth')->group(function () {
 Route::get('/admin/index', [AdminController::class, 'indexPage'])->name('admin-index');
 Route::get('/admin/master', [AdminController::class, 'masterPage'])->name('admin-master');
 Route::get('admin/product/edit/{id}', [AdminController::class, 'editProduct'])->name('admin-product-edit');
@@ -45,10 +60,4 @@ Route::get('admin/product/createFrom', [AdminController::class, 'prodCreateForm'
 Route::post('admin/product/createProduct', [AdminController::class, 'createProduct'])->name('admin-create-product');
 Route::post('admin/product/updateProduct/{id}', [AdminController::class, 'updateProduct'])->name('admin-update-product');
 
-
-Route::get('/loginpage',[MyAuthController::class, "loginPage"])->name('login-page');
-Route::post('/loginuser',[MyAuthController::class, "login"])->name('login');
-Route::get('/registerpage',[MyAuthController::class, "registerPage"])->name('register-page');
-Route::post('/register',[MyAuthController::class, "register"])->name('register');
-
-
+});

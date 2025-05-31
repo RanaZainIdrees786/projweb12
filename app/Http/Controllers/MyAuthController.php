@@ -6,19 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-
-
-
-
-
-
-
-
-
-
 
 class MyAuthController extends Controller
 {
@@ -65,13 +54,27 @@ class MyAuthController extends Controller
             // } else {
             //     return "error in messag successfully";
             // }
-            return redirect()->route('fruitable-index');
+        $credentials = $request->only('email', 'password');
 
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('admin-index');
+        }
 
         } else {
             return redirect()->back()->with('error', 'Invalid credentials');
         }
 
+    }
+
+
+
+     public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 
 
