@@ -54,12 +54,17 @@ class MyAuthController extends Controller
             // } else {
             //     return "error in messag successfully";
             // }
-        $credentials = $request->only('email', 'password');
+            $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->route('admin-index');
-        }
+            if (Auth::attempt($credentials)) {
+                $request->session()->regenerate();
+                if ($user->is_admin == 0) {
+                    return redirect()->route('fruitable-index');
+                }
+
+                return redirect()->route('admin-index');
+
+            }
 
         } else {
             return redirect()->back()->with('error', 'Invalid credentials');
@@ -69,7 +74,7 @@ class MyAuthController extends Controller
 
 
 
-     public function logout(Request $request)
+    public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();

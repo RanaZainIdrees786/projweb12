@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
+use App\Models\Order;
 class FruitableController extends Controller
 {
     //
@@ -42,7 +44,8 @@ class FruitableController extends Controller
     }
 
 
-    public function addtoCart($id){
+    public function addtoCart($id)
+    {
         $product = Product::findOrFail($id);
 
         // $cart = [
@@ -52,9 +55,9 @@ class FruitableController extends Controller
 
         $cart = session()->get('cart');
 
-        if(isset($cart[$id])){
+        if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
-        }else{
+        } else {
             $cart[$id] = [
                 "name" => $product->name,
                 "price" => $product->price,
@@ -68,10 +71,61 @@ class FruitableController extends Controller
 
     }
 
-    public function showCart(){
+    public function showCart()
+    {
         $cart = session()->get('cart');
         dd($cart);
 
     }
 
+    public function removeFromCart($id)
+    {
+        $cart = session()->get('cart');
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+            return redirect()->back()->with('success', 'item removed successfully');
+        } else {
+            return redirect()->back()->withErrors('item does not exist in the cart');
+        }
+    }
+
+    function storeOrder(Request $request)
+    {
+        // Example input structure:
+        // $request->user_id = 1;
+        // $request->products = [
+        //     ['product_id' => 2, 'quantity' => 3],
+        //     ['product_id' => 5, 'quantity' => 1],
+        // ];
+
+        $cart = session('cart');
+        $user_id = $request->user_id;
+
+        DB::beginTransaction();
+
+        try {
+            // 1. Create the order
+            $order = Order::create([
+                'user_id' => $request->user_id,
+                'status' => 'pending',
+            ]);
+
+            // 2. Prepare data for pivot table
+            $productData = [];
+            foreach ($request->products as $item) {
+                $productData[$item['product_id']] = ['quantity' => $item['quantity']];
+            }
+
+            // 3. Attach products to order
+            $order->products()->attach($productData);
+
+            DB::commit();
+
+            return response()->json(['message' => 'Order created successfully.']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }

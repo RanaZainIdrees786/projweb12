@@ -220,8 +220,7 @@
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <a href="{{route('fruitable-addtocart',$product->id)}}"
                                                         class="btn btn-sm border border-secondary rounded-pill text-primary"><i
-                                                            class="fa fa-shopping-bag me-1 text-primary"></i> Add to
-                                                        cart</a>
+                                                            class="fa fa-shopping-bag me-1 text-primary"></i> Add to cart</a>
                                                     <a class="btn btn-sm border border-secondary rounded-pill px-3 text-primary"
                                                         href="{{ route('fruitable-shop-detail', $product->id) }}">Details</a>
                                                 </div>

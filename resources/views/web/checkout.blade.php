@@ -10,6 +10,14 @@
         </ol>
     </div>
 
+    @php
+        $user = Auth::user();
+        $user_id= "";
+        if($user) {
+            $user_id= $user->id;
+        }
+
+    @endphp
     <!-- Checkout Page Start -->
     <div class="container-fluid py-5">
         <div class="container py-5">
@@ -32,8 +40,8 @@
                             </div>
                         </div>
                         <div class="form-item">
-                            <label class="form-label my-3">Company Name<sup>*</sup></label>
-                            <input type="text" class="form-control">
+                            <label class="form-label my-3">User Id<sup>*</sup></label>
+                            <input type="text" value={{$user_id}} class="form-control" disabled>
                         </div>
                         <div class="form-item">
                             <label class="form-label my-3">Address <sup>*</sup></label>
@@ -43,14 +51,7 @@
                             <label class="form-label my-3">Town/City<sup>*</sup></label>
                             <input type="text" class="form-control">
                         </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Country<sup>*</sup></label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Postcode/Zip<sup>*</sup></label>
-                            <input type="text" class="form-control">
-                        </div>
+
                         <div class="form-item">
                             <label class="form-label my-3">Mobile<sup>*</sup></label>
                             <input type="tel" class="form-control">
@@ -59,15 +60,7 @@
                             <label class="form-label my-3">Email Address<sup>*</sup></label>
                             <input type="email" class="form-control">
                         </div>
-                        <div class="form-check my-3">
-                            <input type="checkbox" class="form-check-input" id="Account-1" name="Accounts" value="Accounts">
-                            <label class="form-check-label" for="Account-1">Create an account?</label>
-                        </div>
-                        <hr>
-                        <div class="form-check my-3">
-                            <input class="form-check-input" type="checkbox" id="Address-1" name="Address" value="Address">
-                            <label class="form-check-label" for="Address-1">Ship to a different address?</label>
-                        </div>
+                    
                         <div class="form-item">
                             <textarea name="text" class="form-control" spellcheck="false" cols="30" rows="11"
                                 placeholder="Oreder Notes (Optional)"></textarea>
