@@ -39,7 +39,6 @@ Route::get('/fruitable/checkout', [FruitableController::class, 'checkoutPage'])-
 Route::get('/fruitable/contact', [FruitableController::class, 'contactPage'])->name('fruitable-contact');
 Route::get('fruitable/addtocart/{id}',[FruitableController::class, 'addtoCart'])->name('fruitable-addtocart');
 Route::get('fruitable/showcart',[FruitableController::class, 'showCart'])->name('fruitable-showcart');
-
 // Admin Panel Routes
 
 
