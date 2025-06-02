@@ -99,8 +99,11 @@ class FruitableController extends Controller
         //     ['product_id' => 5, 'quantity' => 1],
         // ];
 
+        // This code needs revision
         $cart = session('cart');
         $user_id = $request->user_id;
+
+
 
         DB::beginTransaction();
 
